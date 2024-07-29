@@ -22,19 +22,19 @@
 </template>
 
 <script>
-import IconDailyQuests from '@/components/icons/IconDailyQuests.vue'
-import IconCollections from '@/components/icons/IconCollections.vue'
-import IconSpecialOffers from '@/components/icons/IconSpecialOffers.vue'
+import IconDailyQuests from "@/components/icons/IconDailyQuests.vue";
+import IconCollections from "@/components/icons/IconCollections.vue";
+import IconSpecialOffers from "@/components/icons/IconSpecialOffers.vue";
 
 export default {
-  name: 'SlapHeaderButtons',
+  name: "SlapHeaderButtons",
 
   components: {
     IconDailyQuests,
     IconCollections,
-    IconSpecialOffers
+    IconSpecialOffers,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +57,7 @@ export default {
   &__text {
     white-space: nowrap;
     font-size: 12px;
-    color: rgba(255, 255, 255, .68);
+    color: rgba(255, 255, 255, 0.68);
   }
 }
 </style>

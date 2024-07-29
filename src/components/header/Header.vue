@@ -15,10 +15,7 @@
       </div>
       <div class="sl-header__balance">
         <div class="sl-header__balance-text">Balance:</div>
-        <div
-          v-if="balance !== null"
-          class="sl-header__balance-value"
-        >
+        <div v-if="balance !== null" class="sl-header__balance-value">
           {{ balanceFormatted }}
         </div>
       </div>
@@ -28,31 +25,33 @@
 </template>
 
 <script>
-import IconLeagueDiamond from '@/components/icons/IconLeagueDiamond.vue'
-import IconDefaultAvatar from '@/components/icons/IconDefaultAvatar.vue'
-import HeaderButtons from '@/components/header/HeaderButtons.vue'
+import IconLeagueDiamond from "@/components/icons/IconLeagueDiamond.vue";
+import IconDefaultAvatar from "@/components/icons/IconDefaultAvatar.vue";
+import HeaderButtons from "@/components/header/HeaderButtons.vue";
 
 export default {
-  name: 'SlapHeader',
+  name: "SlapHeader",
 
   components: {
     IconLeagueDiamond,
     IconDefaultAvatar,
-    HeaderButtons
+    HeaderButtons,
   },
 
   props: {
-    balance: Number
+    balance: Number,
   },
 
   computed: {
     balanceFormatted() {
-      const formattedString = this.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      const formattedString = this.balance
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
       return formattedString;
-    }
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -67,7 +66,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
-    
+
     &-avatar {
       flex: 0 0 44px;
       height: 44px;
@@ -76,7 +75,7 @@ export default {
         max-width: 100%;
         max-height: 100%;
         padding: 2px;
-        border: 2px solid #0099C9;
+        border: 2px solid #0099c9;
         border-radius: 12px;
       }
     }
