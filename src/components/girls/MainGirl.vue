@@ -25,19 +25,18 @@ export default {
   data() {
     return {
       isLoaded: false,
+      animationIdleEntryCount: 0,
     };
   },
 
   methods: {
-    setIdleAnimation: debounce((animation) => {
-      animation.state.setAnimation(0, "Idle", true);
-    }, 1700),
     spineInit() {
       var app = new PIXI.Application({
         height: 900,
         width: 500,
         backgroundAlpha: 0,
       });
+
       app.stage.interactive = true;
       this.$refs.area.appendChild(app.view);
 
@@ -56,13 +55,32 @@ export default {
           }
 
           animation.interactive = true;
+          animation.state.addListener({
+            complete: (entry) => {
+              animation.state.setAnimation(0, "Idle", true);
+
+              if (entry.animation.name === "Idle") {
+                this.animationIdleEntryCount += 1;
+
+                if (this.animationIdleEntryCount > 2) {
+                  animation.state.setAnimation(0, "Wait", true);
+                }
+              }
+            },
+            start: (entry) => {
+              if (entry.animation.name !== "Idle") {
+                this.animationIdleEntryCount = 0;
+              }
+            },
+            interrupt: () => {},
+            end: () => {},
+          });
           animation.on("pointerdown", async () => {
             if (!this.energyLeftAmount) {
               return;
             }
 
             animation.state.setAnimation(0, "Hit", false);
-            this.setIdleAnimation(animation);
             this.$emit("slap");
           });
 
