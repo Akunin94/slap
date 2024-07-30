@@ -1,33 +1,37 @@
 <template>
-  <div class="sl-header">
+  <header class="sl-header">
     <div class="sl-header__top">
       <div class="sl-header__account">
         <div class="sl-header__account-avatar">
           <IconDefaultAvatar />
         </div>
-        <div class="sl-header__account-info">
-          <div class="sl-header__account-name">Pavel2000</div>
-          <div class="sl-header__account-league">
-            <IconLeagueDiamond class="sl-header__account-league-icon" />
-            Diamond league
+        <div class="sl-header__right">
+          <div class="sl-header__account-info">
+            <div class="sl-header__account-name">Pavel2000</div>
+            <div class="sl-header__account-league flex align-center">
+              <IconDiamond class="mr-1" />
+              Diamond league
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="sl-header__balance">
-        <div class="sl-header__balance-text">Balance:</div>
-        <div v-if="balance !== null" class="sl-header__balance-value">
-          {{ balanceFormatted }}
+          <div v-if="balance !== null" class="sl-header__balance">
+            <img class="mr-1" src="/icons/icon-coin.png" alt="" />
+            {{ balanceFormatted }}
+          </div>
         </div>
       </div>
     </div>
     <HeaderButtons />
-  </div>
+    <HeaderDailyGoal class="sl-header__daily-goal" :percent="56" />
+  </header>
 </template>
 
 <script>
 import IconLeagueDiamond from "@/components/icons/IconLeagueDiamond.vue";
 import IconDefaultAvatar from "@/components/icons/IconDefaultAvatar.vue";
+import IconDiamond from "@/components/icons/IconDiamond.vue";
+import IconCoin from "@/components/icons/IconCoin.vue";
 import HeaderButtons from "@/components/header/HeaderButtons.vue";
+import HeaderDailyGoal from "@/components/header/HeaderDailyGoal.vue";
 
 export default {
   name: "SlapHeader",
@@ -35,7 +39,10 @@ export default {
   components: {
     IconLeagueDiamond,
     IconDefaultAvatar,
+    IconDiamond,
     HeaderButtons,
+    IconCoin,
+    HeaderDailyGoal,
   },
 
   props: {
@@ -60,72 +67,71 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  padding: 20px 16px;
+  padding: 10px 16px;
 
   &__account {
     display: flex;
     align-items: center;
-    gap: 10px;
 
     &-avatar {
-      flex: 0 0 44px;
-      height: 44px;
+      flex: 0 0 50px;
+      height: 50px;
+      margin-right: 10px;
 
       svg {
         max-width: 100%;
         max-height: 100%;
-        padding: 2px;
-        border: 2px solid #0099c9;
-        border-radius: 12px;
+        padding: 1px;
+        border: 1px solid #0099c9;
+        border-radius: 8px;
       }
     }
 
     &-info {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      margin-bottom: 8px;
+      white-space: nowrap;
     }
 
     &-name {
       color: #0099c9;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 15px;
+      margin-right: 8px;
+      line-height: 20px;
     }
 
     &-league {
       color: #797979;
-      font-size: 10px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-
-      &-icon {
-        width: 20px;
-        height: auto;
-      }
+      font-size: 14px;
+      line-height: 20px;
     }
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: column;
   }
 
   &__top {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 8px;
   }
 
   &__balance {
-    text-align: right;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ff8a00;
+    display: flex;
+    align-items: center;
+  }
 
-    &-text {
-      font-size: 12px;
-      color: #999;
-      font-weight: 600;
-    }
-
-    &-value {
-      font-weight: 800;
-      font-size: 22px;
-      color: #ff8a00;
-    }
+  &__daily-goal {
+    position: absolute;
+    top: 124px;
+    right: 16px;
   }
 }
 </style>

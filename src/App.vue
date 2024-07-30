@@ -33,6 +33,12 @@ export default {
     MainFooter,
   },
 
+  computed: {
+    isTelegramBot() {
+      return window.Telegram?.WebApp?.initData;
+    },
+  },
+
   methods: {
     onSlap() {
       if (this.energyLeftAmount === 0) {
@@ -122,6 +128,10 @@ export default {
         this.energyLeftAmount = 20;
       } finally {
         this.isReady = true;
+        // TEMP!!!
+        if (this.energyLeftAmount === null) {
+          this.energyLeftAmount = 20;
+        }
       }
     },
 
@@ -169,7 +179,6 @@ export default {
 
 <style lang="scss" scoped>
 .sl-layout {
-  background: url("data:image/svg+xml,%3Csvg width='1080' height='2400' viewBox='0 0 1080 2400' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1080' height='2400' transform='matrix(-1 0 0 1 1080 0)' fill='url(%23paint0_linear_49_313)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_49_313' x1='540' y1='0' x2='540' y2='2400' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23374553'/%3E%3Cstop offset='0.91' stop-color='%2355052B'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E%0A")
-    50% 50% / 100% no-repeat;
+  background: #55052c url("/background.png") 50% 50% / cover no-repeat;
 }
 </style>

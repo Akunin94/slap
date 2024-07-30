@@ -28,3 +28,10 @@ canvas {
   50% { stroke-dashoffset: 62.8; }
   100% { stroke-dashoffset: 62.8; }
 }
+
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

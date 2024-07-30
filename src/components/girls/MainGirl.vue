@@ -1,12 +1,11 @@
 <template>
-  <div v-show="isLoaded" class="sl-main-girl-with-animation" ref="area" />
+  <div v-show="isLoaded" class="sl-main-girl" ref="area" />
   <SlLoader v-if="!isLoaded" />
 </template>
 
 <script>
 import * as PIXI from "pixi.js";
 import { Spine } from "pixi-spine";
-import { debounce } from "lodash";
 import SlLoader from "@/components/Loader.vue";
 
 export default {
@@ -99,12 +98,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sl-main-girl-with-animation {
+.sl-main-girl {
   position: absolute;
   left: 0;
   left: 0;
   width: 100%;
-  padding: 5px 0 0;
+  padding: 80px 0 120px;
   height: 100vh;
   text-align: center;
   display: flex;
@@ -116,8 +115,9 @@ export default {
     left: 0;
     right: 0;
     content: "";
-    height: 120px;
-    background: linear-gradient(180deg, #000000 50%, rgba(77, 23, 55, 0) 100%);
+    height: 180px;
+    background: linear-gradient(180deg, #000000 39.5%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
   }
 
   &:after {
@@ -126,8 +126,9 @@ export default {
     left: 0;
     right: 0;
     content: "";
-    height: 120px;
-    background: linear-gradient(0deg, #000000 50%, rgba(77, 23, 55, 0) 100%);
+    height: 328px;
+    background: linear-gradient(0deg, #000000 35.03%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
   }
 
   &:deep(canvas) {
