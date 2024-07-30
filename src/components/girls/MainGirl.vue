@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import { useGlobalStore } from "@/store/global";
 import * as PIXI from "pixi.js";
 import { Spine } from "pixi-spine";
 import SlLoader from "@/components/Loader.vue";
@@ -17,14 +18,11 @@ export default {
 
   emits: ["slap"],
 
-  props: {
-    energyLeftAmount: Number,
-  },
-
   data() {
     return {
       isLoaded: false,
       animationIdleEntryCount: 0,
+      globalStore: useGlobalStore(),
     };
   },
 
@@ -75,7 +73,7 @@ export default {
             end: () => {},
           });
           animation.on("pointerdown", async () => {
-            if (!this.energyLeftAmount) {
+            if (!this.globalStore.energyLeftAmount) {
               return;
             }
 
@@ -108,28 +106,7 @@ export default {
   text-align: center;
   display: flex;
   align-items: center;
-
-  &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    content: "";
-    height: 180px;
-    background: linear-gradient(180deg, #000000 39.5%, rgba(0, 0, 0, 0) 100%);
-    pointer-events: none;
-  }
-
-  &:after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    content: "";
-    height: 328px;
-    background: linear-gradient(0deg, #000000 35.03%, rgba(0, 0, 0, 0) 100%);
-    pointer-events: none;
-  }
+  z-index: 4;
 
   &:deep(canvas) {
     max-width: 100%;

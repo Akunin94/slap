@@ -13,9 +13,9 @@
               Diamond league
             </div>
           </div>
-          <div v-if="balance !== null" class="sl-header__balance">
-            <img class="mr-1" src="/icons/icon-coin.png" alt="" />
-            {{ balanceFormatted }}
+          <div v-if="globalStore.balance !== null" class="sl-header__balance">
+            <IconCoin class="mr-1 w-[24px]" />
+            {{ globalStore.balanceFormatted }}
           </div>
         </div>
       </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { useGlobalStore } from "@/store/global";
 import IconLeagueDiamond from "@/components/icons/IconLeagueDiamond.vue";
 import IconDefaultAvatar from "@/components/icons/IconDefaultAvatar.vue";
 import IconDiamond from "@/components/icons/IconDiamond.vue";
@@ -45,18 +46,10 @@ export default {
     HeaderDailyGoal,
   },
 
-  props: {
-    balance: Number,
-  },
-
-  computed: {
-    balanceFormatted() {
-      const formattedString = this.balance
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-
-      return formattedString;
-    },
+  data() {
+    return {
+      globalStore: useGlobalStore(),
+    };
   },
 };
 </script>
@@ -68,6 +61,7 @@ export default {
   right: 0;
   top: 0;
   padding: 10px 16px;
+  z-index: 5;
 
   &__account {
     display: flex;

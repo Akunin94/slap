@@ -14,20 +14,31 @@
 </template>
 
 <script>
+import { useGlobalStore } from "@/store/global";
 import IconEnergy from "@/components/icons/IconEnergy.vue";
 import IconBoost from "@/components/icons/IconBoost.vue";
 
 export default {
   name: "SlapFooterActions",
 
+  data() {
+    return {
+      globalStore: useGlobalStore(),
+    };
+  },
+
+  computed: {
+    energyMaxAmount() {
+      return this.globalStore.energyMaxAmount;
+    },
+    energyLeftAmount() {
+      return this.globalStore.energyLeftAmount;
+    },
+  },
+
   components: {
     IconEnergy,
     IconBoost,
-  },
-
-  props: {
-    energyLeftAmount: Number,
-    energyMaxAmount: Number,
   },
 };
 </script>

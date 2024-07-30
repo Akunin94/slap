@@ -1,22 +1,44 @@
 <template>
   <div class="sl-footer-menu">
-    <div class="sl-footer-menu__item sl-footer-menu__item--active">
+    <router-link
+      to="/"
+      class="sl-footer-menu__item"
+      :active-class="'sl-footer-menu__item--active'"
+      exact
+    >
       <IconDoor class="sl-footer-menu__svg mb-1" />
       Room
-    </div>
-    <div class="sl-footer-menu__item">
+    </router-link>
+    <div
+      class="sl-footer-menu__item"
+      :active-class="'sl-footer-menu__item--active'"
+      exact
+    >
       <IconShop class="sl-footer-menu__svg mb-1" />
       Shop
     </div>
-    <div class="sl-footer-menu__item">
+    <router-link
+      to="/rating"
+      class="sl-footer-menu__item"
+      :active-class="'sl-footer-menu__item--active'"
+      exact
+    >
       <IconRating class="sl-footer-menu__svg mb-1" />
       Rating
-    </div>
-    <div class="sl-footer-menu__item">
+    </router-link>
+    <div
+      class="sl-footer-menu__item"
+      :active-class="'sl-footer-menu__item--active'"
+      exact
+    >
       <IconEarn class="sl-footer-menu__svg mb-1" />
       Earn
     </div>
-    <div class="sl-footer-menu__item">
+    <div
+      class="sl-footer-menu__item"
+      :active-class="'sl-footer-menu__item--active'"
+      exact
+    >
       <IconEarn class="sl-footer-menu__svg mb-1" />
       Airdrop
     </div>

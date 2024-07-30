@@ -1,10 +1,6 @@
 <template>
   <footer class="sl-footer">
-    <FooterActions
-      class="mb-4"
-      :energyLeftAmount="energyLeftAmount"
-      :energyMaxAmount="energyMaxAmount"
-    />
+    <FooterActions v-if="hasActions" class="mb-4" />
     <FooterMenu />
   </footer>
 </template>
@@ -16,14 +12,16 @@ import FooterMenu from "@/components/footer/FooterMenu.vue";
 export default {
   name: "SlapFooter",
 
+  props: {
+    hasActions: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   components: {
     FooterActions,
     FooterMenu,
-  },
-
-  props: {
-    energyLeftAmount: Number,
-    energyMaxAmount: Number,
   },
 };
 </script>
@@ -35,5 +33,6 @@ export default {
   right: 0;
   bottom: 0;
   padding: 0 16px 34px;
+  z-index: 5;
 }
 </style>
