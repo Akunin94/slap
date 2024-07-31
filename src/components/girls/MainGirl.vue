@@ -37,7 +37,7 @@ export default {
       app.stage.interactive = true;
       this.$refs.area.appendChild(app.view);
 
-      PIXI.Assets.load("spine/standard_v2_2x_faceai.json")
+      PIXI.Assets.load("/spine/standard_v2_2x_faceai.json")
         .then((resource) => {
           const animation = new Spine(resource.spineData);
 

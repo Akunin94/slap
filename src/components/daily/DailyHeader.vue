@@ -1,16 +1,17 @@
 <template>
-  <header class="sl-rating-header">
-    <div class="sl-rating-header__title">Your balance:</div>
-    <div class="sl-rating-header__value">
+  <header class="sl-daily-header">
+    <div class="sl-daily-header__title">Your balance:</div>
+    <div class="sl-daily-header__value">
       <IconCoin class="w-[32px] mr-2" />
       {{ globalStore.balanceFormatted }}
     </div>
     <img
-      src="/icons/league-diamond.png"
+      width="128"
+      height="128"
+      src="/icons/icon-coin.png"
       alt="Diamond league"
-      class="sl-rating-header__pic"
+      class="sl-daily-header__pic"
     />
-    <div class="sl-rating-header__league">Diamond league</div>
   </header>
 </template>
 
@@ -19,7 +20,7 @@ import { useGlobalStore } from "@/store/global";
 import IconCoin from "@/components/icons/IconCoin.vue";
 
 export default {
-  name: "SlapRatingHeader",
+  name: "SlapDailyHeader",
 
   components: { IconCoin },
 
@@ -32,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sl-rating-header {
+.sl-daily-header {
   position: relative;
   padding: 10px 16px 16px;
   z-index: 5;
@@ -59,14 +60,7 @@ export default {
   }
 
   &__pic {
-    margin: -62px 0;
-  }
-
-  &__league {
-    color: #fff;
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: 700;
+    margin: 0 0 28px;
   }
 }
 </style>

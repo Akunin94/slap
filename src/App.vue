@@ -60,6 +60,8 @@ export default {
       const nowTimestamp = new Date().getTime();
       const energyStorageData = `${this.energyLeftAmount};${nowTimestamp}`;
 
+      console.log(3, energyStorageData);
+
       try {
         this.webApp.CloudStorage.setItem(
           "energy_left",
@@ -111,7 +113,11 @@ export default {
       const timeDiff = currentTimestamp - initialTimestamp;
       const actualEnergy = initialEnergy + Math.floor(timeDiff * 3);
 
-      return actualEnergy;
+      if (typeof actualEnergy === "number" && !isNaN(actualEnergy)) {
+        return actualEnergy;
+      }
+
+      return this.globalStore.energyMaxAmount;
     },
 
     fetchEnergy() {
@@ -130,6 +136,7 @@ export default {
         });
       } catch (error) {
         console.error(error);
+        this.globalStore.setEnergyLeftAmount(this.globalStore.energyMaxAmount);
       } finally {
         this.isReady = true;
       }

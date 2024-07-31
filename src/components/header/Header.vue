@@ -110,7 +110,7 @@ export default {
   &__top {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 
   &__balance {

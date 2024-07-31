@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import RatingHeader from "@/components/header/RatingHeader.vue";
+import RatingHeader from "@/components/rating/RatingHeader.vue";
 import MainFooter from "@/components/footer/Footer.vue";
 import RatingTabs from "@/components/rating/RatingTabs.vue";
 

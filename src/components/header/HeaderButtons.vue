@@ -1,11 +1,11 @@
 <template>
   <div class="sl-header-buttons">
-    <div class="sl-header-buttons__item">
+    <router-link to="/daily" class="sl-header-buttons__item">
       <div class="sl-header-buttons__icon">
         <IconDailyQuests />
       </div>
       <div class="sl-header-buttons__text">Daily quests</div>
-    </div>
+    </router-link>
     <div class="sl-header-buttons__item">
       <div class="sl-header-buttons__icon">
         <IconDailyQuests />
@@ -44,10 +44,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 calc(33.33% - 13.33px);
+    padding: 4px 8px;
+    border-radius: 8px;
+    flex: 0 0 calc(33.33% - 8px);
 
     &:not(:last-child) {
-      margin-right: 20px;
+      margin-right: 12px;
+    }
+
+    &:active {
+      background: #ffffff14;
     }
   }
 
