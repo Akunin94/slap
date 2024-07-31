@@ -2,9 +2,11 @@ import { defineStore } from 'pinia'
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
+    isDevMode: false,
     balance: null,
     energyLeftAmount: null,
-    energyMaxAmount: 2000
+    energyMaxAmount: 10000,
+    energyLeftIncrementAmount: 10
   }),
   getters: {
     balanceFormatted: (state) => {
@@ -17,21 +19,24 @@ export const useGlobalStore = defineStore('global', {
     },
   },
   actions: {
+    setIsDevMode(value) {
+      this.isDevMode = value
+    },
     setBalance(value) {
       this.balance = value
     },
     incrementBalance() {
-      this.balance += 1
+      this.balance += this.energyLeftIncrementAmount
     },
     setEnergyLeftAmount(value) {
-      this.energyLeftAmount = value
+      this.energyLeftAmount = Math.min(this.energyMaxAmount, value)
     },
     decrementEnergyLeftAmount() {
-      if (!this.energyLeftAmount) {
+      if (!this.energyLeftAmount && this.energyLeftAmount < this.energyLeftIncrementAmount) {
         return
       }
 
-      this.energyLeftAmount -= 1
+      this.energyLeftAmount -= this.energyLeftIncrementAmount
     }
   }
 })

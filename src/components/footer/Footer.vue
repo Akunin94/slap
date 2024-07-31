@@ -28,7 +28,7 @@ export default {
 
 <style lang="scss">
 .sl-footer {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;

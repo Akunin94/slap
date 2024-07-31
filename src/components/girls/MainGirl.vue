@@ -73,7 +73,10 @@ export default {
             end: () => {},
           });
           animation.on("pointerdown", async () => {
-            if (!this.globalStore.energyLeftAmount) {
+            if (
+              this.globalStore.energyLeftAmount <
+              this.globalStore.energyLeftIncrementAmount
+            ) {
               return;
             }
 

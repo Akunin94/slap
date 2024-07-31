@@ -1,5 +1,5 @@
 <template>
-  <div class="sl-layout min-h-screen">
+  <div class="sl-layout" :test="isDev">
     <router-view />
   </div>
 </template>
@@ -15,6 +15,7 @@ export default {
       timeout: null,
       isReady: false,
       globalStore: useGlobalStore(),
+      isDev: import.meta.env.DEV,
     };
   },
 
@@ -36,36 +37,48 @@ export default {
   methods: {
     persistClicks() {
       console.log("persistClicks", this.balance);
-      this.webApp.CloudStorage.setItem(
-        "clicks_count",
-        this.balance,
-        (error, success) => {
-          if (error) {
-            console.error("clicks_count", error);
-          } else {
-            if (success) {
-              console.log(`Clicks persisted succesfuly: ${this.balance}`);
+      try {
+        this.webApp.CloudStorage.setItem(
+          "clicks_count",
+          this.balance,
+          (error, success) => {
+            if (error) {
+              console.error("clicks_count", error);
             } else {
-              console.log(`Clicks failed to persist: ${this.balance}`);
+              if (success) {
+                console.log(`Clicks persisted succesfuly: ${this.balance}`);
+              } else {
+                console.log(`Clicks failed to persist: ${this.balance}`);
+              }
             }
           }
-        }
-      );
+        );
+      } catch (error) {
+        console.error(error);
+      }
 
-      // const energyStorageData = `${this.energyLeftAmount};${new Date().getTime()}`
+      const nowTimestamp = new Date().getTime();
+      const energyStorageData = `${this.energyLeftAmount};${nowTimestamp}`;
 
-      // window.Telegram.WebApp.CloudStorage.setItem('energy_left', energyStorageData, (error, success) => {
-      //    if (error) {
-      //     console.error('energy_left', error);
-      //   } else {
-      //     if (success) {
-      //       console.log(`Energy left setted: ${this.balance}`)
-      //     }
-      //     else {
-      //       console.log(`Energy left failed: ${this.balance}`)
-      //     }
-      //   }
-      // });
+      try {
+        this.webApp.CloudStorage.setItem(
+          "energy_left",
+          energyStorageData,
+          (error, success) => {
+            if (error) {
+              console.error("energy_left", error);
+            } else {
+              if (success) {
+                console.log(`Energy left setted: ${this.energyStorageData}`);
+              } else {
+                console.log(`Energy left failed: ${this.energyStorageData}`);
+              }
+            }
+          }
+        );
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     fetchClicks() {
@@ -90,25 +103,35 @@ export default {
       }
     },
 
+    getActualEnergy(input) {
+      const [energy, timestamp] = input.split(";");
+      const initialEnergy = parseInt(energy);
+      const initialTimestamp = parseInt(timestamp) / 1000;
+      const currentTimestamp = Date.now() / 1000;
+      const timeDiff = currentTimestamp - initialTimestamp;
+      const actualEnergy = initialEnergy + Math.floor(timeDiff * 3);
+
+      return actualEnergy;
+    },
+
     fetchEnergy() {
+      if (this.globalStore.isDevMode) {
+        this.globalStore.setEnergyLeftAmount(500);
+      }
+
       try {
-        this.webApp.CloudStorage.getItem("clicks_count", (error, value) => {
+        this.webApp.CloudStorage.getItem("energy_left", (error, value) => {
           if (error) {
             console.error(error);
           } else {
-            this.globalStore.setEnergyLeftAmount(+value);
-            console.log(`Fetched clicks: ${value}`);
+            this.globalStore.setEnergyLeftAmount(this.getActualEnergy(value));
+            console.log(`Fetched energy: ${value}`);
           }
         });
       } catch (error) {
         console.error(error);
-        this.globalStore.setEnergyLeftAmount(20);
       } finally {
         this.isReady = true;
-        // TEMP!!!
-        if (this.energyLeftAmount === null) {
-          this.globalStore.setEnergyLeftAmount(20);
-        }
       }
     },
   },
@@ -130,8 +153,15 @@ export default {
   },
 
   mounted() {
+    this.globalStore.setIsDevMode(this.isDev);
     this.fetchClicks();
     this.fetchEnergy();
+
+    setInterval(() => {
+      this.globalStore.setEnergyLeftAmount(
+        this.globalStore.energyLeftAmount + 3
+      );
+    }, 1000);
   },
 };
 </script>
@@ -140,6 +170,7 @@ export default {
 .sl-layout {
   background: #55052c url("/background.png") 50% 50% / cover no-repeat;
   position: relative;
+  height: var(--tg-viewport-stable-height, 100vh);
 
   &:before {
     position: absolute;
