@@ -12,10 +12,16 @@ import RatingTabs from "@/components/rating/RatingTabs.vue";
 export default {
   name: "SlapRatingPage",
 
+  emits: ["ready"],
+
   components: {
     RatingHeader,
     MainFooter,
     RatingTabs,
+  },
+
+  mounted() {
+    this.$emit("ready");
   },
 };
 </script>

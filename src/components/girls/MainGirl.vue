@@ -1,6 +1,8 @@
 <template>
-  <div v-show="isLoaded" class="sl-main-girl" ref="area" />
-  <SlLoader v-if="!isLoaded" />
+  <div v-show="isLoaded" class="sl-main-girl" ref="area">
+    <div class="sl-main-girl__slapable-area" @mousedown="onSlap" />
+  </div>
+  <SlLoader class="sl-main-girl__loader" v-if="!isLoaded" />
 </template>
 
 <script>
@@ -16,51 +18,56 @@ export default {
     SlLoader,
   },
 
-  emits: ["slap"],
+  emits: ["slap", "ready"],
 
   data() {
     return {
       isLoaded: false,
       animationIdleEntryCount: 0,
       globalStore: useGlobalStore(),
+      animation: null,
+      app,
     };
   },
 
   methods: {
     spineInit() {
-      var app = new PIXI.Application({
+      this.app = new PIXI.Application({
         height: 900,
         width: 500,
         backgroundAlpha: 0,
       });
 
-      app.stage.interactive = true;
-      this.$refs.area.appendChild(app.view);
+      this.app.stage.interactive = true;
+      this.$refs.area.appendChild(this.app.view);
 
       PIXI.Assets.load("/spine/standard_v2_2x_faceai.json")
         .then((resource) => {
-          const animation = new Spine(resource.spineData);
+          this.animation = new Spine(resource.spineData);
 
-          animation.scale.set(0.5, 0.5);
-          animation.position.set(app.screen.width / 2, app.screen.height);
-          app.stage.addChild(animation);
+          this.animation.scale.set(0.5, 0.5);
+          this.animation.position.set(
+            this.app.screen.width / 2,
+            this.app.screen.height
+          );
+          this.app.stage.addChild(this.animation);
 
-          if (animation.state.hasAnimation("Idle")) {
-            animation.state.setAnimation(0, "Idle", true);
-            animation.state.timeScale = 1;
-            animation.autoUpdate = true;
+          if (this.animation.state.hasAnimation("Idle")) {
+            this.animation.state.setAnimation(0, "Idle", true);
+            this.animation.state.timeScale = 1;
+            this.animation.autoUpdate = true;
           }
 
-          animation.interactive = true;
-          animation.state.addListener({
+          this.animation.interactive = true;
+          this.animation.state.addListener({
             complete: (entry) => {
-              animation.state.setAnimation(0, "Idle", true);
+              this.animation.state.setAnimation(0, "Idle", true);
 
               if (entry.animation.name === "Idle") {
                 this.animationIdleEntryCount += 1;
 
                 if (this.animationIdleEntryCount > 2) {
-                  animation.state.setAnimation(0, "Wait", true);
+                  this.animation.state.setAnimation(0, "Wait", true);
                 }
               }
             },
@@ -72,23 +79,25 @@ export default {
             interrupt: () => {},
             end: () => {},
           });
-          animation.on("pointerdown", async () => {
-            if (
-              this.globalStore.energyLeftAmount <
-              this.globalStore.energyLeftIncrementAmount
-            ) {
-              return;
-            }
-
-            animation.state.setAnimation(0, "Hit", false);
-            this.$emit("slap");
-          });
 
           this.isLoaded = true;
+          this.$emit("ready");
         })
         .catch((error) => {
           console.error(error);
         });
+    },
+
+    onSlap() {
+      if (
+        this.globalStore.energyLeftAmount <
+        this.globalStore.energyLeftIncrementAmount
+      ) {
+        return;
+      }
+
+      this.animation.state.setAnimation(0, "Hit", false);
+      this.$emit("slap");
     },
   },
 
@@ -116,6 +125,24 @@ export default {
     max-height: 100%;
     margin: 0 auto;
     position: relative;
+  }
+
+  &__slapable-area {
+    position: absolute;
+    z-index: 10;
+    bottom: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32vh;
+    height: 25vh;
+  }
+
+  &__loader {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 </style>

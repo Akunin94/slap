@@ -546,6 +546,11 @@
   resolved "https://artifactory.routesinc.com/artifactory/api/npm/npm-remote/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
   integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
 
+"@types/telegram-web-app@^7":
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/@types/telegram-web-app/-/telegram-web-app-7.8.0.tgz#3bc4fd4e579be07cd819dfd46d6bfe649a6cca90"
+  integrity sha512-9Fw012DJr136Aq61ZacqQLgFqrGdtwROWLINvgrslJZsZKNvArHzI4m83U5epjoIhe+Y97RWVh4PeYmZmP/UGA==
+
 "@vitejs/plugin-vue@^5.0.5":
   version "5.0.5"
   resolved "https://artifactory.routesinc.com/artifactory/api/npm/npm-remote/@vitejs/plugin-vue/-/plugin-vue-5.0.5.tgz#e3dc11e427d4b818b7e3202766ad156e3d5e2eaa"
@@ -1613,6 +1618,18 @@ vue-router@^4.4.0:
   integrity sha512-HB+t2p611aIZraV2aPSRNXf0Z/oLZFrlygJm+sZbdJaW6lcFqEDQwnzUBXn+DApw+/QzDU/I9TeWx9izEjTmsA==
   dependencies:
     "@vue/devtools-api" "^6.5.1"
+
+vue-tg@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/vue-tg/-/vue-tg-0.8.0.tgz#6add75333b1431725bb111732f45cb69780d5e4b"
+  integrity sha512-0DwRLrxtoOn7iCuEx0+GDHy5vSJPgbqJrEpE8QgRTJbLFI6ogP9jzG58pS8gXbntb3rqqWepxGwUJMn95MqP1g==
+  dependencies:
+    "@types/telegram-web-app" "^7"
+
+vue3-click-away@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/vue3-click-away/-/vue3-click-away-1.2.4.tgz#ee76a241e7cff2a345e14342d558f4801d14cc26"
+  integrity sha512-O9Z2KlvIhJT8OxaFy04eiZE9rc1Mk/bp+70dLok68ko3Kr8AW5dU+j8avSk4GDQu94FllSr4m5ul4BpzlKOw1A==
 
 vue@^3.4.31:
   version "3.4.33"

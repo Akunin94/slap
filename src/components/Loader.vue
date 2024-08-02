@@ -48,12 +48,6 @@
 
 <style lang="scss" scoped>
 .sl-loader {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-
   &__indicator {
     stroke: white;
   }

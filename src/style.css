@@ -37,3 +37,13 @@ canvas {
   -ms-user-select: none;
   user-select: none;
 }
+
+/* .fade-enter-active,
+.fade-leave-active {
+  transition: opacity 5.5s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+} */

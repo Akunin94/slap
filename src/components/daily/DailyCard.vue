@@ -77,6 +77,7 @@ export default {
   display: flex;
   align-items: center;
   transition: 0.1s;
+  cursor: pointer;
 
   &:not(:last-child) {
     margin-bottom: 8px;

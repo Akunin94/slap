@@ -1,7 +1,11 @@
 <template>
-  <DailyHeader />
-  <DailyBody :item-daily="itemDaily" :items-tasks="itemsTasks" />
+  <!-- <div class="sl-daily-quest"> -->
+  <div class="sl-daily-quest__content overflow-auto">
+    <DailyHeader />
+    <DailyBody :item-daily="itemDaily" :items-tasks="itemsTasks" />
+  </div>
   <MainFooter />
+  <!-- </div> -->
 </template>
 
 <script>
@@ -12,6 +16,8 @@ import MainFooter from "@/components/footer/Footer.vue";
 
 export default {
   name: "SlapDailyQuestPage",
+
+  emits: ["ready"],
 
   components: {
     DailyHeader,
@@ -34,6 +40,15 @@ export default {
           reward: "+ 10000",
           icon: "youtube",
           done: false,
+          popup: {
+            icon: "youtube",
+            title: "Your first steps in Crypto & Stock trading",
+            subtitle: "Trading basics for stocks and crypto: 5-Step Guide",
+            link: "https://www.wikipedia.org/",
+            linkText: "Watch video",
+            text: "Wait 20 minutes for moderation check to claim the prize",
+            reward: 10000,
+          },
         },
         {
           title: "Subscribe us",
@@ -46,6 +61,13 @@ export default {
           reward: "+ 15000",
           icon: "telegram",
           done: false,
+          popup: {
+            icon: "telegram",
+            title: "Join our TG channel",
+            link: "https://www.wikipedia.org/",
+            linkText: "Join channel",
+            reward: 10000,
+          },
         },
         {
           title: "Invite friends",
@@ -66,6 +88,7 @@ export default {
           done: false,
         },
       ],
+      webApp: window.Telegram.WebApp,
     };
   },
 
@@ -76,6 +99,9 @@ export default {
   },
 
   methods: {
+    redirectoToMainPage() {
+      this.$router.push("/");
+    },
     onSlap() {
       if (this.energyLeftAmount === 0) {
         return;
@@ -87,11 +113,37 @@ export default {
       console.log("slap", this.globalStore.balance);
     },
   },
+
+  mounted() {
+    this.$emit("ready");
+
+    const webApp = window.Telegram.WebApp.BackButton;
+
+    if (webApp) {
+      webApp.show();
+      webApp.onClick(this.redirectoToMainPage());
+    }
+  },
+
+  unmounted() {
+    const webApp = window.Telegram.WebApp.BackButton;
+
+    if (webApp) {
+      webApp.hide();
+      webApp.offClick(this.redirectoToMainPage());
+    }
+  },
 };
 </script>
 
 <style lang="scss">
 .sl-layout:before {
   height: 454px !important;
+}
+
+.sl-daily-quest {
+  &__content {
+    height: calc(100vh - 110px);
+  }
 }
 </style>

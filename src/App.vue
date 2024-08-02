@@ -1,14 +1,28 @@
 <template>
-  <div class="sl-layout" :test="isDev">
-    <router-view />
+  <div class="sl-layout">
+    <router-view v-show="isPageReady" @ready="isPageReady = true"></router-view>
+    <div
+      class="sl-layout__splash"
+      :class="{ 'sl-layout__splash--hidden': isPageReady }"
+    >
+      <SlLoader
+        class="sl-layout__loader fixed left-0 right-0 top-1/2 -translate-y-1/2"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { useGlobalStore } from "@/store/global";
+import SlLoader from "@/components/Loader.vue";
+import { useWebAppViewport } from "vue-tg";
+
+const { disableVerticalSwipes } = useWebAppViewport();
 
 export default {
   name: "SlapApp",
+
+  components: { SlLoader },
 
   data() {
     return {
@@ -16,6 +30,7 @@ export default {
       isReady: false,
       globalStore: useGlobalStore(),
       isDev: import.meta.env.DEV,
+      isPageReady: false,
     };
   },
 
@@ -59,8 +74,6 @@ export default {
 
       const nowTimestamp = new Date().getTime();
       const energyStorageData = `${this.energyLeftAmount};${nowTimestamp}`;
-
-      console.log(3, energyStorageData);
 
       try {
         this.webApp.CloudStorage.setItem(
@@ -159,6 +172,13 @@ export default {
     },
   },
 
+  created() {
+    this.webApp.expand();
+    this.webApp.setHeaderColor("#000000");
+    this.webApp.setBackgroundColor("#000000");
+    disableVerticalSwipes();
+  },
+
   mounted() {
     this.globalStore.setIsDevMode(this.isDev);
     this.fetchClicks();
@@ -177,7 +197,27 @@ export default {
 .sl-layout {
   background: #55052c url("/background.png") 50% 50% / cover no-repeat;
   position: relative;
-  height: var(--tg-viewport-stable-height, 100vh);
+  height: var(--tg-viewport-height, 100vh);
+
+  &__splash {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: var(--tg-viewport-height, 100vh);
+    background: url(/girl3.png) 50% 100% / auto 100% no-repeat,
+      url("/background3.png") 50% 50% / cover no-repeat #4c2949;
+    opacity: 1;
+    visibility: visible;
+    transition: 0.35s;
+    z-index: 10;
+
+    &--hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 
   &:before {
     position: absolute;
@@ -200,6 +240,14 @@ export default {
     background: linear-gradient(0deg, #000000 35.03%, rgba(0, 0, 0, 0) 100%);
     pointer-events: none;
     z-index: 4;
+  }
+
+  &__loader {
+    &:deep(.sl-loader__svg) {
+      width: 80px;
+      height: 80px;
+      max-width: 80px;
+    }
   }
 }
 </style>

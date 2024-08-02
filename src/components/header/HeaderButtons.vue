@@ -46,10 +46,10 @@ export default {
     justify-content: center;
     padding: 4px 8px;
     border-radius: 8px;
-    flex: 0 0 calc(33.33% - 8px);
+    flex: 0 0 calc(33.33% - 2px);
 
     &:not(:last-child) {
-      margin-right: 12px;
+      margin-right: 2px;
     }
 
     &:active {
