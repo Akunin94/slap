@@ -100,16 +100,6 @@ export default {
     redirectoToMainPage() {
       this.$router.push("/");
     },
-    onSlap() {
-      if (this.energyLeftAmount === 0) {
-        return;
-      }
-
-      this.globalStore.incrementBalance();
-      this.globalStore.decrementEnergyLeftAmount();
-      window.Telegram.WebApp.HapticFeedback.impactOccurred("heavy");
-      console.log("slap", this.globalStore.balance);
-    },
   },
 
   mounted() {

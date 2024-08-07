@@ -7,9 +7,12 @@
         >{{ energyLeftAmount }} / {{ energyMaxAmount }}</span
       >
     </div>
-    <div class="sl-footer-actions__item sl-footer-actions__item--boost">
-      <IconBoost class="mr-1" />Boost
-    </div>
+    <router-link
+      to="/boost"
+      class="sl-footer-actions__item sl-footer-actions__item--boost"
+    >
+      <IconBoost class="mr-1 w-[40px] h-[40px]" />Boost
+    </router-link>
   </div>
 </template>
 

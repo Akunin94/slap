@@ -188,7 +188,7 @@ export default {
   },
 
   mounted() {
-    console.log("APP VERSION", 9);
+    console.log("APP VERSION", 10);
     this.globalStore.setIsDevMode(this.isDev);
     this.fetchClicks();
     this.fetchEnergy();

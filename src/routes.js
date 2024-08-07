@@ -5,6 +5,7 @@ const routes = [
   { path: '/rating', component: () => import('./pages/Rating.vue') },
   { path: '/daily', component: () => import('./pages/DailyQuest.vue') },
   { path: '/collections', component: () => import('./pages/Collections.vue') },
+  { path: '/boost', component: () => import('./pages/Boost.vue') },
 ]
 
 const router = createRouter({

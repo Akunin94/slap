@@ -23,6 +23,36 @@
         <div class="sl-main-page__popup-level">Level 3</div>
         <div class="sl-main-page__popup-pic">
           <img src="/girl1.png" alt="" />
+          <div
+            class="sl-main-page__popup-pic-label"
+            :class="{
+              'sl-main-page__popup-pic-label--hidden':
+                isLvlupClaimed || !isVisibleLvlUpPopupWithButton,
+            }"
+            @click="claim"
+          >
+            <div class="sl-main-page__popup-pic-label-title">Energy Limit</div>
+            <div class="sl-main-page__popup-pic-label-value">
+              <IconEnergy class="w-[24px] h-[24px]" /> +32 000
+            </div>
+            <div class="sl-main-page__popup-pic-label-button">Claim</div>
+          </div>
+        </div>
+        <div
+          class="sl-main-page__popup-button"
+          :class="{
+            'sl-main-page__popup-button--active': isVisibleLvlUpPopupWithButton,
+            'sl-main-page__popup-button--claimed': isLvlupClaimed,
+          }"
+          @click="onButtonClick"
+        >
+          <template v-if="isLvlupClaimed">
+            <div class="sl-main-page__popup-button-title">Share</div>
+            <div class="flex items-center">
+              <IconCoin class="mr-1 w-[24px] h-[24px]" /> +1000 Slap
+            </div>
+          </template>
+          <template v-else> Claim All </template>
         </div>
         <div class="sl-main-page__popup-benefits">
           <div class="sl-main-page__popup-benefits-item">
@@ -59,6 +89,7 @@ import MainFooter from "@/components/footer/Footer.vue";
 import Popup from "../components/popup/Popup.vue";
 import IconEnergy from "@/components/icons/IconEnergy.vue";
 import IconSlap from "@/components/icons/IconSlap.vue";
+import IconCoin from "@/components/icons/IconCoin.vue";
 import IconArrowTopGreen from "@/components/icons/IconArrowTopGreen.vue";
 
 export default {
@@ -69,6 +100,7 @@ export default {
     MainFooter,
     Popup,
     IconEnergy,
+    IconCoin,
     IconSlap,
     IconArrowTopGreen,
   },
@@ -77,9 +109,11 @@ export default {
     return {
       animationId: 0,
       globalStore: useGlobalStore(),
-      isVisibleLvlUpPopup: false,
       isPageReady: false,
       animationComponent: null,
+      isVisibleLvlUpPopup: false,
+      isVisibleLvlUpPopupWithButton: false,
+      isLvlupClaimed: false,
     };
   },
 
@@ -90,6 +124,9 @@ export default {
   },
 
   methods: {
+    claim() {
+      this.isLvlupClaimed = !this.isLvlupClaimed;
+    },
     onSlap() {
       if (this.energyLeftAmount === 0) {
         return;
@@ -113,14 +150,16 @@ export default {
       )
     ).default;
 
-    // setTimeout(() => {
-    //   this.isVisibleLvlUpPopup = true;
-    // }, 1000);
+    setTimeout(() => {
+      this.isVisibleLvlUpPopup = true;
+    }, 0);
+    setTimeout(() => {
+      this.isVisibleLvlUpPopupWithButton = true;
+    }, 2000);
   },
 
   watch: {
     async "globalStore.globalAnimation"() {
-      console.log("watch globalAnimation");
       this.animationId += 1;
 
       this.animationComponent = (
@@ -193,6 +232,64 @@ export default {
       margin: 0 0 -280px 0;
       position: relative;
       left: -30px;
+
+      &-label {
+        position: absolute;
+        top: 130px;
+        left: calc(50% - 35px);
+        width: 120px;
+        height: 156px;
+        background: url(/lvlup-label.png) 0 0 / 100% no-repeat;
+        transform: rotate(15deg);
+        opacity: 1;
+        visibility: visible;
+        transition: 0.2s;
+
+        &--hidden {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        &-title {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          top: 28px;
+          font-size: 15px;
+          font-weight: 600;
+          color: #000000cc;
+        }
+
+        &-value {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 56px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #000000cc;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            filter: brightness(0);
+          }
+        }
+
+        &-button {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          bottom: 12px;
+          font-size: 15px;
+          line-height: 20px;
+          font-weight: 600;
+          color: #000000cc;
+        }
+      }
     }
 
     &-shadow {
@@ -210,11 +307,14 @@ export default {
     }
 
     &-benefits {
-      position: relative;
+      position: absolute;
+      left: 16px;
+      right: 8px;
+      bottom: 32px;
       z-index: 2;
       display: flex;
-      width: calc(100% + 8px);
       text-align: left;
+      transition: 0.2s;
 
       &-item {
         flex: 0 0 calc(33.33% - 8px);
@@ -240,6 +340,56 @@ export default {
         line-height: 24px;
         font-weight: 600;
       }
+    }
+
+    &-button {
+      height: 60px;
+      border-radius: 8px;
+      border: 2px solid #2f61b7;
+      font-size: 19px;
+      font-weight: 600;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 32px;
+      display: flex;
+      flex-direction: column;
+
+      &--active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      &:active {
+        border-color: #1a4186;
+      }
+
+      &--claimed {
+        background: #2f61b7;
+
+        &:active {
+          background-color: #1a4186;
+        }
+      }
+
+      &-title {
+        font-size: 13px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+    }
+
+    &-button--active + &-benefits {
+      bottom: 108px;
     }
   }
 }

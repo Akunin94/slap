@@ -7,7 +7,7 @@
       </div>
       <template v-if="data">
         <div v-if="data.icon" class="mb-4">
-          <component class="w-[80px]" :is="iconComponent(data.icon)" />
+          <component class="w-[80px] h-[80px]" :is="iconComponent(data.icon)" />
         </div>
         <div class="sl-popup__header">
           <div v-if="data.title" class="sl-popup__title">
@@ -18,6 +18,12 @@
           </div>
           <div v-if="data.description" class="sl-popup__description">
             {{ data.description }}
+          </div>
+          <div v-if="data.price" class="sl-popup__price">
+            {{ data.price }}
+          </div>
+          <div v-if="data.desc" class="sl-popup__desc">
+            {{ data.desc }}
           </div>
           <a
             v-if="data.link && data.linkText"
@@ -52,8 +58,20 @@
         </div>
       </template>
       <slot name="content" />
-      <button v-if="buttonText" class="sl-popup__button" type="button">
-        <div class="sl-popup__button-text">{{ buttonText }}</div>
+      <button
+        v-if="buttonText || (buttonTextTitle && buttonTextCost)"
+        class="sl-popup__button"
+        type="button"
+      >
+        <div v-if="buttonText" class="sl-popup__button-text">
+          {{ buttonText }}
+        </div>
+        <div v-if="buttonTextTitle" class="sl-popup__button-title">
+          {{ buttonTextTitle }}
+        </div>
+        <div v-if="buttonTextCost" class="sl-popup__button-cost">
+          <IconCoin class="mr-1 w-[24px] h-[24px]" /> {{ buttonTextCost }}
+        </div>
         <Loader class="sl-popup__button-loading" />
       </button>
     </div>
@@ -68,6 +86,10 @@ import IconTelegram from "@/components/icons/IconTelegram.vue";
 import IconInvite from "@/components/icons/IconInvite.vue";
 import IconClose from "@/components/icons/IconClose.vue";
 import IconCoin from "@/components/icons/IconCoin.vue";
+import IconEnergy from "@/components/icons/IconEnergy.vue";
+import IconBoost from "@/components/icons/IconBoost.vue";
+import IconSlap from "@/components/icons/IconSlap.vue";
+import IconEnergyLimit from "@/components/icons/IconEnergyLimit.vue";
 import Loader from "@/components/Loader.vue";
 
 export default {
@@ -85,6 +107,14 @@ export default {
       required: false,
     },
     buttonText: {
+      type: String,
+      required: false,
+    },
+    buttonTextTitle: {
+      type: String,
+      required: false,
+    },
+    buttonTextCost: {
       type: String,
       required: false,
     },
@@ -136,6 +166,22 @@ export default {
         return IconInvite;
       }
 
+      if (iconName === "energy") {
+        return IconEnergy;
+      }
+
+      if (iconName === "boost") {
+        return IconBoost;
+      }
+
+      if (iconName === "slap") {
+        return IconSlap;
+      }
+
+      if (iconName === "energyLimit") {
+        return IconEnergyLimit;
+      }
+
       return "";
     },
   },
@@ -157,7 +203,7 @@ export default {
     left: 16px;
     right: 16px;
     bottom: 0;
-    padding: 20px 16px;
+    padding: 20px 16px 32px;
     border-radius: 16px;
     background: linear-gradient(360deg, #000000 0%, #34021a 92%);
     z-index: 10;
@@ -233,6 +279,20 @@ export default {
     line-height: 24px;
     color: #fff;
     font-weight: 700;
+  }
+
+  &__price {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #ff8a00;
+    margin-top: 16px;
+  }
+
+  &__desc {
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffffcc;
   }
 
   &__link {
@@ -315,6 +375,7 @@ export default {
     display: flex;
     width: 100%;
     height: 60px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 19px;
@@ -372,6 +433,22 @@ export default {
       .sl-popup__button-loading {
         display: block;
       }
+    }
+
+    &-title {
+      font-size: 13px;
+      line-height: 20px;
+      color: #fff;
+      font-weight: 400;
+    }
+
+    &-cost {
+      font-size: 19px;
+      line-height: 28px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
     }
   }
 }

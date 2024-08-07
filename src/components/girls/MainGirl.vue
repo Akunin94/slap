@@ -52,8 +52,6 @@ export default {
           );
           this.app.stage.addChild(this.animation);
 
-          console.log(this.animation);
-
           if (this.animation.state.hasAnimation("Idle")) {
             this.animation.state.setAnimation(0, "Idle", true);
             this.animation.state.timeScale = 1;
