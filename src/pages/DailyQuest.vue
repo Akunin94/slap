@@ -1,11 +1,9 @@
 <template>
-  <!-- <div class="sl-daily-quest"> -->
   <div class="sl-daily-quest__content overflow-auto">
     <DailyHeader />
     <DailyBody :item-daily="itemDaily" :items-tasks="itemsTasks" />
   </div>
   <MainFooter />
-  <!-- </div> -->
 </template>
 
 <script>
@@ -121,7 +119,7 @@ export default {
 
     if (webApp) {
       webApp.show();
-      webApp.onClick(this.redirectoToMainPage());
+      webApp.onClick(this.redirectoToMainPage);
     }
   },
 
@@ -130,7 +128,7 @@ export default {
 
     if (webApp) {
       webApp.hide();
-      webApp.offClick(this.redirectoToMainPage());
+      webApp.offClick(this.redirectoToMainPage);
     }
   },
 };

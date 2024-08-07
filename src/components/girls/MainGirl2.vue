@@ -1,8 +1,15 @@
 <template>
-  <div v-show="isLoaded" class="sl-main-girl" ref="area">
-    <div class="sl-main-girl__slapable-area" @mousedown="onSlap" />
+  <div v-show="isLoaded" class="sl-main-girl2" ref="area">
+    <div
+      class="sl-main-girl2__slapable-area sl-main-girl2__slapable-area--left"
+      @mousedown="onSlap('left')"
+    />
+    <div
+      class="sl-main-girl2__slapable-area sl-main-girl2__slapable-area--right"
+      @mousedown="onSlap('right')"
+    />
   </div>
-  <SlLoader class="sl-main-girl__loader" v-if="!isLoaded" />
+  <SlLoader class="sl-main-girl2__loader" v-if="!isLoaded" />
 </template>
 
 <script>
@@ -12,7 +19,7 @@ import { Spine } from "pixi-spine";
 import SlLoader from "@/components/Loader.vue";
 
 export default {
-  name: "SlapMainGirl2",
+  name: "SlapMainGirl",
 
   components: {
     SlLoader,
@@ -34,14 +41,14 @@ export default {
     spineInit() {
       this.app = new PIXI.Application({
         height: 900,
-        width: 500,
+        width: 600,
         backgroundAlpha: 0,
       });
 
       this.app.stage.interactive = true;
       this.$refs.area.appendChild(this.app.view);
 
-      PIXI.Assets.load("/spine/standard_v2_2x_faceai.json")
+      PIXI.Assets.load("/spine1/standard_v2_2x_faceai.json")
         .then((resource) => {
           this.animation = new Spine(resource.spineData);
 
@@ -52,18 +59,11 @@ export default {
           );
           this.app.stage.addChild(this.animation);
 
-          console.log(this.animation);
-
           if (this.animation.state.hasAnimation("Idle")) {
             this.animation.state.setAnimation(0, "Idle", true);
             this.animation.state.timeScale = 1;
             this.animation.autoUpdate = true;
           }
-          // if (this.animation.state.hasAnimation("Idle")) {
-          //   this.animation.state.setAnimation(0, "Idle", true);
-          //   this.animation.state.timeScale = 1;
-          //   this.animation.autoUpdate = true;
-          // }
 
           this.animation.interactive = true;
           this.animation.state.addListener({
@@ -83,22 +83,11 @@ export default {
                 this.animationIdleEntryCount = 0;
               }
             },
-            interrupt: (entry) => {
-              // if (entry.animation.name === "Hit") {
-              //   this.animation.state.setAnimation(0, "Hit_Short", false);
-              // }
-              // if (entry.animation.name === "Hit_Short") {
-              //   this.animation.state.setAnimation(0, "Hit_Short2", false);
-              // }
-              // if (entry.animation.name === "Hit_Short3") {
-              //   this.animation.state.setAnimation(0, "Hit_Short3", false);
-              // }
-            },
+            interrupt: () => {},
             end: () => {},
           });
 
           this.isLoaded = true;
-
           setTimeout(() => {
             this.$emit("ready");
           }, 500);
@@ -108,7 +97,7 @@ export default {
         });
     },
 
-    onSlap() {
+    onSlap(position) {
       if (
         this.globalStore.energyLeftAmount <
         this.globalStore.energyLeftIncrementAmount
@@ -116,7 +105,10 @@ export default {
         return;
       }
 
-      this.animation.state.setAnimation(0, "Hit", false);
+      // const hitAnimationName = "Hits";
+      const hitAnimationName = position === "left" ? "Hit_R" : "Hit_L";
+
+      this.animation.state.setAnimation(0, hitAnimationName, false);
       this.$emit("slap");
     },
   },
@@ -128,12 +120,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sl-main-girl {
+.sl-main-girl2 {
   position: absolute;
   left: 0;
   left: 0;
   width: 100%;
-  padding: 80px 0 120px;
+  padding: 50px 0 150px;
   height: 100vh;
   text-align: center;
   display: flex;
@@ -153,8 +145,16 @@ export default {
     bottom: 20vh;
     left: 50%;
     transform: translateX(-50%);
-    width: 32vh;
-    height: 25vh;
+    width: 23vh;
+    height: 27vh;
+
+    &--left {
+      margin-left: -11.5vh;
+    }
+
+    &--right {
+      margin-left: 11.5vh;
+    }
   }
 
   &__loader {

@@ -1,0 +1,104 @@
+
+standard_v2_2x_faceai.png
+size: 4096,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm_L
+  rotate: true
+  xy: 2820, 888
+  size: 521, 554
+  orig: 708, 726
+  offset: 93, 79
+  index: -1
+Arm_R
+  rotate: false
+  xy: 3321, 753
+  size: 192, 656
+  orig: 379, 837
+  offset: 94, 92
+  index: -1
+Body
+  rotate: false
+  xy: 2, 3
+  size: 804, 1406
+  orig: 994, 1606
+  offset: 95, 100
+  index: -1
+Body_Red_L
+  rotate: 180
+  xy: 680, 3
+  size: 804, 1406
+  orig: 994, 1606
+  offset: 95, 100
+  index: -1
+Body_Red_R
+  rotate: false
+  xy: 1339, 3
+  size: 804, 1406
+  orig: 994, 1606
+  offset: 95, 100
+  index: -1
+Eye_L
+  rotate: false
+  xy: 2, 1349
+  size: 69, 60
+  orig: 263, 254
+  offset: 97, 97
+  index: -1
+Eye_R
+  rotate: false
+  xy: 801, 1350
+  size: 46, 58
+  orig: 244, 253
+  offset: 99, 99
+  index: -1
+Hair_2
+  rotate: false
+  xy: 3142, 648
+  size: 313, 402
+  orig: 449, 587
+  offset: 77, 86
+  index: -1
+Hair_R
+  rotate: true
+  xy: 2361, 833
+  size: 170, 463
+  orig: 368, 655
+  offset: 101, 99
+  index: -1
+Hair_R_Back
+  rotate: false
+  xy: 3502, 904
+  size: 250, 506
+  orig: 426, 688
+  offset: 91, 90
+  index: -1
+Hair_Top
+  rotate: false
+  xy: 3664, 1008
+  size: 250, 401
+  orig: 421, 584
+  offset: 79, 94
+  index: -1
+Head
+  rotate: true
+  xy: 2558, 996
+  size: 413, 354
+  orig: 605, 548
+  offset: 97, 96
+  index: -1
+Nose
+  rotate: false
+  xy: 737, 1292
+  size: 85, 117
+  orig: 278, 310
+  offset: 95, 94
+  index: -1
+White
+  rotate: false
+  xy: 2145, 997
+  size: 411, 411
+  orig: 496, 496
+  offset: 43, 42
+  index: -1

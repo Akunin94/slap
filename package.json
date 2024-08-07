@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build_local": "vite build --base=/home/davron/SLAP/slap-app/dist",
     "build": "vite build",
+    "build_deploy": "vite build && firebase deploy --only hosting:big-celerity-429513-a2-24b8a",
+    "build_deploy_test": "vite build --outDir dist-test && firebase deploy --only hosting:big-celerity-429513-a2",
     "preview": "vite preview"
   },
   "dependencies": {

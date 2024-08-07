@@ -1,6 +1,13 @@
 <template>
-  <div class="sl-layout">
-    <router-view v-show="isPageReady" @ready="isPageReady = true"></router-view>
+  <div
+    class="sl-layout"
+    :style="{ backgroundImage: `url('${globalStore.globalBackground}')` }"
+  >
+    <router-view
+      v-show="isPageReady"
+      @ready="isPageReady = true"
+      @not-ready="isPageReady = false"
+    ></router-view>
     <div
       class="sl-layout__splash"
       :class="{ 'sl-layout__splash--hidden': isPageReady }"
@@ -173,6 +180,7 @@ export default {
   },
 
   created() {
+    this.webApp.ready();
     this.webApp.expand();
     this.webApp.setHeaderColor("#000000");
     this.webApp.setBackgroundColor("#000000");
@@ -180,9 +188,36 @@ export default {
   },
 
   mounted() {
+    console.log("APP VERSION", 9);
     this.globalStore.setIsDevMode(this.isDev);
     this.fetchClicks();
     this.fetchEnergy();
+
+    try {
+      this.webApp.CloudStorage.getItem("background", (error, value) => {
+        console.log("get background", error, value);
+        if (error) {
+          this.globalStore.setGlobalBackground("/background.png");
+        } else {
+          this.globalStore.setGlobalBackground(value);
+        }
+      });
+    } catch (error) {
+      console.log("get background error", error);
+      this.globalStore.setGlobalBackground("/background.png");
+    }
+
+    try {
+      this.webApp.CloudStorage.getItem("main_animation", (error, value) => {
+        if (error) {
+          this.globalStore.setGlobalAnimation("MainGirl");
+        } else {
+          this.globalStore.setGlobalAnimation(value);
+        }
+      });
+    } catch (error) {
+      this.globalStore.setGlobalAnimation("MainGirl");
+    }
 
     setInterval(() => {
       this.globalStore.setEnergyLeftAmount(

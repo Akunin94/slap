@@ -348,7 +348,7 @@ export default {
     }
 
     &:active {
-      background: var(--Button-Button-Pressed, #1a4186);
+      background: #1a4186;
 
       &:before {
         display: none;

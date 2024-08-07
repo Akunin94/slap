@@ -4,6 +4,7 @@ const routes = [
   { path: '/', component: () => import('./pages/Main.vue') },
   { path: '/rating', component: () => import('./pages/Rating.vue') },
   { path: '/daily', component: () => import('./pages/DailyQuest.vue') },
+  { path: '/collections', component: () => import('./pages/Collections.vue') },
 ]
 
 const router = createRouter({

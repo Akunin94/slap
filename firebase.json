@@ -1,0 +1,24 @@
+{
+  "hosting": [
+    {
+      "public": "dist",
+      "site": "big-celerity-429513-a2-24b8a",
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "public": "dist-test",
+      "site": "big-celerity-429513-a2",
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

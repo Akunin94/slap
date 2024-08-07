@@ -21,7 +21,11 @@
       </div>
     </div>
     <HeaderButtons />
-    <HeaderDailyGoal class="sl-header__daily-goal" :percent="56" />
+    <HeaderDailyGoal
+      v-if="!noDailyQuest"
+      class="sl-header__daily-goal"
+      :percent="56"
+    />
   </header>
 </template>
 
@@ -36,6 +40,13 @@ import HeaderDailyGoal from "@/components/header/HeaderDailyGoal.vue";
 
 export default {
   name: "SlapHeader",
+
+  props: {
+    noDailyQuest: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   components: {
     IconLeagueDiamond,

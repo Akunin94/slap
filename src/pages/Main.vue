@@ -1,6 +1,12 @@
 <template>
   <div class="sl-main-page">
-    <MainGirl @slap="onSlap" @ready="$emit('ready')" />
+    <component
+      v-if="animationComponent"
+      :key="animationId"
+      :is="animationComponent"
+      @slap="onSlap"
+      @ready="$emit('ready')"
+    />
     <MainHeader />
     <MainFooter has-actions />
     <Popup
@@ -9,13 +15,38 @@
       @close="isVisibleLvlUpPopup = false"
     >
       <template #content>
+        <div class="sl-main-page__popup-shadow" />
         <div class="sl-main-page__popup-title">Level Up</div>
         <div class="sl-main-page__popup-subtitle">
           Congratulations, you have reached
         </div>
         <div class="sl-main-page__popup-level">Level 3</div>
-        <div class="sl-main-page__popup-pic"></div>
-        <div class="sl-main-page__popup-benefits"></div>
+        <div class="sl-main-page__popup-pic">
+          <img src="/girl1.png" alt="" />
+        </div>
+        <div class="sl-main-page__popup-benefits">
+          <div class="sl-main-page__popup-benefits-item">
+            <div class="sl-main-page__popup-benefits-title">Energy Limit</div>
+            <div class="sl-main-page__popup-benefits-info">
+              <IconEnergy class="mr-1 w-[24px] h-[24px]" />
+              <div class="sl-main-page__popup-benefits-value">1500</div>
+            </div>
+          </div>
+          <div class="sl-main-page__popup-benefits-item">
+            <div class="sl-main-page__popup-benefits-title">Slap Power</div>
+            <div class="sl-main-page__popup-benefits-info">
+              <IconSlap class="mr-1 w-[24px] h-[24px]" />
+              <div class="sl-main-page__popup-benefits-value">5</div>
+            </div>
+          </div>
+          <div class="sl-main-page__popup-benefits-item">
+            <div class="sl-main-page__popup-benefits-title">Level</div>
+            <div class="sl-main-page__popup-benefits-info">
+              <IconArrowTopGreen class="mr-1 w-[24px] h-[24px]" />
+              <div class="sl-main-page__popup-benefits-value">3</div>
+            </div>
+          </div>
+        </div>
       </template>
     </Popup>
   </div>
@@ -23,26 +54,32 @@
 
 <script>
 import { useGlobalStore } from "@/store/global";
-import MainGirl from "@/components/girls/MainGirl.vue";
 import MainHeader from "@/components/header/Header.vue";
 import MainFooter from "@/components/footer/Footer.vue";
 import Popup from "../components/popup/Popup.vue";
+import IconEnergy from "@/components/icons/IconEnergy.vue";
+import IconSlap from "@/components/icons/IconSlap.vue";
+import IconArrowTopGreen from "@/components/icons/IconArrowTopGreen.vue";
 
 export default {
   name: "SlapMainPage",
 
   components: {
-    MainGirl,
     MainHeader,
     MainFooter,
     Popup,
+    IconEnergy,
+    IconSlap,
+    IconArrowTopGreen,
   },
 
   data() {
     return {
+      animationId: 0,
       globalStore: useGlobalStore(),
       isVisibleLvlUpPopup: false,
       isPageReady: false,
+      animationComponent: null,
     };
   },
 
@@ -65,10 +102,35 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
+    this.animationId += 1;
+
+    this.animationComponent = (
+      await import(
+        `../components/girls/${
+          this.globalStore.globalAnimation || "MainGirl"
+        }.vue`
+      )
+    ).default;
+
     // setTimeout(() => {
     //   this.isVisibleLvlUpPopup = true;
     // }, 1000);
+  },
+
+  watch: {
+    async "globalStore.globalAnimation"() {
+      console.log("watch globalAnimation");
+      this.animationId += 1;
+
+      this.animationComponent = (
+        await import(
+          `../components/girls/${
+            this.globalStore.globalAnimation || "MainGirl"
+          }.vue`
+        )
+      ).default;
+    },
   },
 };
 </script>
@@ -124,6 +186,59 @@ export default {
         content: "";
         background: url(/icons/icon-leaf.svg) 0 0 no-repeat;
         transform: scaleX(-1);
+      }
+    }
+
+    &-pic {
+      margin: 0 0 -280px 0;
+      position: relative;
+      left: -30px;
+    }
+
+    &-shadow {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 188px;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 23.56%,
+        #000000 60.25%
+      );
+      z-index: 1;
+    }
+
+    &-benefits {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      width: calc(100% + 8px);
+      text-align: left;
+
+      &-item {
+        flex: 0 0 calc(33.33% - 8px);
+        margin-right: 8px;
+        background: #ffffff14;
+        border-radius: 8px;
+        color: #fff;
+        padding: 4px 8px;
+      }
+
+      &-title {
+        font-size: 10px;
+        line-height: 16px;
+      }
+
+      &-info {
+        display: flex;
+        align-items: center;
+      }
+
+      &-value {
+        font-size: 17px;
+        line-height: 24px;
+        font-weight: 600;
       }
     }
   }

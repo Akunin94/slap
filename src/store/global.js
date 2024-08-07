@@ -6,7 +6,9 @@ export const useGlobalStore = defineStore('global', {
     balance: null,
     energyLeftAmount: null,
     energyMaxAmount: 10000,
-    energyLeftIncrementAmount: 10
+    energyLeftIncrementAmount: 10,
+    globalBackground: null,
+    globalAnimation: null
   }),
   getters: {
     balanceFormatted: (state) => {
@@ -19,6 +21,12 @@ export const useGlobalStore = defineStore('global', {
     },
   },
   actions: {
+    setGlobalBackground(value) {
+      this.globalBackground = value
+    },
+    setGlobalAnimation(value) {
+      this.globalAnimation = value
+    },
     setIsDevMode(value) {
       this.isDevMode = value
     },
