@@ -34,14 +34,15 @@
       <IconEarn class="sl-footer-menu__svg mb-1" />
       Earn
     </div>
-    <div
+    <router-link
+      to="/airdrop"
       class="sl-footer-menu__item"
       :active-class="'sl-footer-menu__item--active'"
       exact
     >
       <IconEarn class="sl-footer-menu__svg mb-1" />
       Airdrop
-    </div>
+    </router-link>
   </div>
 </template>
 

@@ -6,6 +6,7 @@ const routes = [
   { path: '/daily', component: () => import('./pages/DailyQuest.vue') },
   { path: '/collections', component: () => import('./pages/Collections.vue') },
   { path: '/boost', component: () => import('./pages/Boost.vue') },
+  { path: '/airdrop', component: () => import('./pages/Airdrop.vue') },
 ]
 
 const router = createRouter({

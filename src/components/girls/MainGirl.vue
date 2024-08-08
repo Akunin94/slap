@@ -122,6 +122,12 @@ export default {
   async mounted() {
     this.spineInit();
   },
+
+  unmounted() {
+    this.app.stop();
+    this.app.destroy();
+    this.app = null;
+  },
 };
 </script>
 

@@ -152,10 +152,10 @@ export default {
 
     setTimeout(() => {
       this.isVisibleLvlUpPopup = true;
-    }, 0);
+    }, 5000);
     setTimeout(() => {
       this.isVisibleLvlUpPopupWithButton = true;
-    }, 2000);
+    }, 7000);
   },
 
   watch: {

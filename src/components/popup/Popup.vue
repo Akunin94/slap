@@ -91,6 +91,8 @@ import IconBoost from "@/components/icons/IconBoost.vue";
 import IconSlap from "@/components/icons/IconSlap.vue";
 import IconEnergyLimit from "@/components/icons/IconEnergyLimit.vue";
 import Loader from "@/components/Loader.vue";
+import IconCoinMarketCap from "@/components/icons/IconCoinMarketCap.vue";
+import IconTonWallet from "@/components/icons/IconTonWallet.vue";
 
 export default {
   name: "SlapPopup",
@@ -180,6 +182,14 @@ export default {
 
       if (iconName === "energyLimit") {
         return IconEnergyLimit;
+      }
+
+      if (iconName === "coinMarketCap") {
+        return IconCoinMarketCap;
+      }
+
+      if (iconName === "tonWallet") {
+        return IconTonWallet;
       }
 
       return "";
